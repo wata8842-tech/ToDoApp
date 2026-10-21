@@ -82,10 +82,17 @@ function scheduleEnd(todo) {
   return new Date(y, m - 1, d, h, min + extra);
 }
 
-// 日時を過ぎた予定を完了にする。手動で未完了に戻したものは再度動かさない
+// 日時を過ぎた予定を片付ける。バイトは削除し、イベントは完了にする。
+// 手動で未完了に戻したイベントは再度動かさない
 function completePastEvents() {
   const now = new Date();
-  let changed = false;
+  const before = todos.length;
+  todos = todos.filter((t) => {
+    if (t.type !== "shift") return true;
+    const end = scheduleEnd(t);
+    return !end || end > now;
+  });
+  let changed = todos.length !== before;
   todos = todos.map((t) => {
     if (t.type === "task" || !t.type || t.done || t.autoCompleted) return t;
     const end = scheduleEnd(t);
