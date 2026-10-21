@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>To Do リスト</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>To Do リスト</h1>
+      <p class="summary" id="summary"></p>
+    </header>
+
+    <form id="new-form" class="new-form" autocomplete="off">
+      <div class="type-switch" role="radiogroup" aria-label="種類">
+        <label><input type="radio" name="type" value="task" checked><span>やること</span></label>
+        <label><input type="radio" name="type" value="event"><span>イベント</span></label>
+        <label><input type="radio" name="type" value="shift"><span>バイト</span></label>
+      </div>
+      <div class="row">
+        <input id="new-title" type="text" placeholder="やることを入力…" maxlength="200" required>
+        <input id="new-due" type="date" aria-label="期限">
+        <input id="new-time" type="time" aria-label="時刻" hidden>
+        <select id="new-period" aria-label="開始の時限" hidden>
+          <option value="">開始</option>
+          <option value="1">1限目</option>
+          <option value="2">2限目</option>
+          <option value="3">3限目</option>
+          <option value="4">4限目</option>
+        </select>
+        <span id="period-sep" class="sep" hidden>〜</span>
+        <select id="new-period-end" aria-label="終了の時限" hidden>
+          <option value="">終了</option>
+          <option value="1">1限目</option>
+          <option value="2">2限目</option>
+          <option value="3">3限目</option>
+          <option value="4">4限目</option>
+        </select>
+        <button type="submit">追加</button>
+      </div>
+    </form>
+
+    <nav class="filters" aria-label="絞り込み">
+      <button type="button" data-filter="active" class="active">未完了</button>
+      <button type="button" data-filter="done">完了</button>
+    </nav>
+
+    <ul id="list" class="list"></ul>
+    <p id="empty" class="empty" hidden>タスクはありません</p>
+
+    <footer>
+      <button type="button" id="clear-done" class="link">完了済みを削除</button>
+      <span class="hint">ダブルクリックで編集</span>
+    </footer>
+  </main>
+
+  <template id="item-template">
+    <li class="item">
+      <input type="checkbox" class="toggle" aria-label="完了">
+      <div class="body">
+        <span class="title"></span>
+        <div class="meta">
+          <span class="badge"></span>
+          <span class="due"></span>
+        </div>
+      </div>
+      <button type="button" class="delete" aria-label="削除">×</button>
+    </li>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
